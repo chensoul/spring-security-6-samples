@@ -7,6 +7,7 @@
     <groupId>com.chensoul</groupId>
     <artifactId>spring-security-6-samples</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <modules>
         <module>ott</module>

@@ -26,20 +26,19 @@ public class OttApplication {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-            .authorizeHttpRequests(http -> http.anyRequest().authenticated())
-            .formLogin(Customizer.withDefaults())
-            .oneTimeTokenLogin(configurer -> configurer
-                .generatedOneTimeTokenSuccessHandler((request, response, oneTimeToken) -> {
-                    var token = oneTimeToken.getTokenValue();
+                .authorizeHttpRequests(http -> http.anyRequest().authenticated())
+                .formLogin(Customizer.withDefaults())
+                .oneTimeTokenLogin(configurer -> configurer
+                        .tokenGenerationSuccessHandler((request, response, oneTimeToken) -> {
+                            var token = oneTimeToken.getTokenValue();
 
-                    var msg = "please go to http://localhost:8080/login/ott?token=" + token;
-                    System.out.println(msg);
+                            var msg = "please go to http://localhost:8080/login/ott?token=" + token;
+                            System.out.println(msg);
 
-                    response.setContentType(MediaType.TEXT_HTML_VALUE);
-                    response.getWriter().write("you've got console mail!");
-
-                }))
-            .build();
+                            response.setContentType(MediaType.TEXT_HTML_VALUE);
+                            response.getWriter().write("you've got console mail!");
+                        }))
+                .build();
     }
 
     @Bean
